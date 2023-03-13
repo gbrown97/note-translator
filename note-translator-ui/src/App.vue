@@ -1,5 +1,5 @@
 <template>
-  <img alt="Vue logo" src="../public/noteTrans.jpg">
+  <img alt="Vue logo" src="../public/noteTrans.png">
   <noteTransl msg="Welcome to Note Translation"/>
 </template>
 
@@ -11,6 +11,7 @@ export default {
   components: {
     noteTransl
   }
+
 }
 </script>
 
@@ -23,7 +24,5 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-#Helloworld {
-  text-align: right;
-}
+
 </style>

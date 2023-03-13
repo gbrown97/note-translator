@@ -28,6 +28,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
 input {
 color: #2c3e50;
   font-size: x-large;
