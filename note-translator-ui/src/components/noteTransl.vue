@@ -1,6 +1,8 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
+  <div >
+
+    <img src="noteTrans.png" alt="Note Translator">
+    <h1>Welcome to Note Translation</h1>
     <br>
     <form>
     <input type="text" placeholder="Username">
@@ -9,8 +11,11 @@
     <input type="password" placeholder="password">
     <br>
     <br>
-      <input  type="button" value="Login" >
-      <input  type="button" value="SignUp">
+
+      <button >Login</button>
+
+      <button @click="$router.push('/signup')">Signup</button>
+
     </form>
 
   </div>
@@ -28,7 +33,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+div{
 
+}
 input {
 color: #2c3e50;
   font-size: x-large;
@@ -37,7 +44,7 @@ color: #2c3e50;
   width: 300px;
   height: 20px
 }
-input[type="button"]{
+button{
 
   color: #2c3e50;
   margin-right: 25px;

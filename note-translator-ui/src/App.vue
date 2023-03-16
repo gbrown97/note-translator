@@ -1,15 +1,18 @@
 <template>
-  <img alt="Vue logo" src="../public/noteTrans.png">
-  <noteTransl msg="Welcome to Note Translation"/>
+  <div>
+  <router-view></router-view>
+
+</div>
 </template>
 
 <script>
-import noteTransl from './components/noteTransl.vue'
+
+
 
 export default {
   name: 'App',
   components: {
-    noteTransl
+
   }
 
 }
