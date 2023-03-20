@@ -5,14 +5,14 @@
     <h1>Welcome to Note Translation</h1>
     <br>
     <form>
-    <input type="text" placeholder="Username">
+    <input type="text" placeholder="Username" v-model="username">
     <br>
     <br>
-    <input type="password" placeholder="password">
+    <input type="password" placeholder="Password" v-model="password">
     <br>
     <br>
 
-      <button >Login</button>
+      <button @click="onLogin()">Login</button>
 
       <button @click="$router.push('/signup')">Signup</button>
 
@@ -22,13 +22,35 @@
 </template>
 
 <script>
-
+import axios from "axios";
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
-  }
-}
+  },
+  data(){
+    return {
+
+      username: "",
+      password: "",
+    };
+  },
+  methods:{
+    onLogin() {
+
+      axios
+          .post("", {
+
+            username: this.username,
+            password: this.password,
+          })
+          .then((response) => {
+            console.log(response.data)
+          });
+
+    }
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

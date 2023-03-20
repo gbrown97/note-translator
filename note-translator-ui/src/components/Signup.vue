@@ -4,26 +4,27 @@
     <h1>Create an account</h1>
     <br>
     <form>
-      <input id="fln" type="text" placeholder="FirstName">
-      <input id="fln" type="text" placeholder="LastName">
+      <input id="fln" type="text" placeholder="FirstName" v-model="fname">
+      <input id="fln" type="text" placeholder="LastName" v-model="lname">
       <br>
       <br>
-      <select class="form-control">
-        <option :value="language.name" v-for="(language) in languagesList" :key="language.name">{{language.name}}</option>
-        <option :value="null" disabled></option>
+      <select class="form-control" v-model="languagesel">
+        <option  value="">Select preferred language</option>
+        <option :value="language.name"  v-for="(language) in languagesList" :key="language.name">{{language.name}}</option>
+
       </select>
       <br>
       <br>
-      <input type="text" placeholder="Email/Username">
+      <input type="text" placeholder="Email/Username" v-model="username">
       <br>
       <br>
-      <input type="password" placeholder="password">
+      <input type="password" placeholder="password" v-model="password">
       <br>
       <br>
-      <input type="password" placeholder="Retype-password">
+      <input type="password" placeholder="Retype-password" v-model="rpassword">
       <br>
       <br>
-      <button>Signup</button>
+      <button @click="onSignup()">Signup</button>
 
 
 
@@ -33,15 +34,47 @@
 </template>
 
 <script>
+import axios from "axios";
+
 let languages = require('./languages.json');
 export default {
   name: 'signup-component',
   data(){
     return{
       languagesList: languages,
+      fname:"",
+      lname:"",
+      languagesel:"",
+      username: "",
+      password: "",
+      rpassword:""
     }
+  },
+  methods: {
+    onSignup() {
+            if(this.password!=this.rpassword){
+              alert("password mismatch !!");
+            }
+            else if(this.languagesel==""){
+              alert("select a language");
+            }
+            else{
+              axios
+                  .post("", {
+                    fName: this.fname,
+                    lName: this.lname,
+                    selLan: this.languagesel,
+                    username: this.username,
+                    password: this.password,
+                  })
+                  .then((response) => {
+                    console.log(response.data)
+                  });
+            }
+    }
+
   }
-}
+    }
 
 </script>
 
@@ -69,7 +102,7 @@ select {
   font-size: larger;
   padding: 15px;
   border-radius: 25px;
-  width: 320px;
+  width: 330px;
   height: 55px
 }
 button{
