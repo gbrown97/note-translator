@@ -13,18 +13,20 @@
         <option :value="language.name"  v-for="(language) in languagesList" :key="language.name">{{language.name}}</option>
 
       </select>
-      <br>
+      <h4 style="color:red;">{{err1}}</h4>
+
       <br>
       <input type="text" placeholder="Email/Username" v-model="username">
       <br>
       <br>
-      <input type="password" placeholder="password" v-model="password">
+      <div>
+        <input type="password" placeholder="password" v-model="password"><h4 style="color:red;">{{err2}}</h4></div>
       <br>
-      <br>
+
       <input type="password" placeholder="Retype-password" v-model="rpassword">
       <br>
       <br>
-      <button @click="onSignup()">Signup</button>
+      <button @submit.prevent @click.prevent="onSignup()">Signup</button>
 
 
 
@@ -41,6 +43,8 @@ export default {
   name: 'signup-component',
   data(){
     return{
+      err1:'',
+      err2:'',
       languagesList: languages,
       fname:"",
       lname:"",
@@ -52,13 +56,16 @@ export default {
   },
   methods: {
     onSignup() {
-            if(this.password!=this.rpassword){
-              alert("password mismatch !!");
-            }
-            else if(this.languagesel==""){
-              alert("select a language");
-            }
-            else{
+      if(this.languagesel==""){
+        this.err1="select a language *";
+      }else{
+        this.err1="";
+      }
+      if(this.password!=this.rpassword||this.password==""||this.rpassword==""){
+              this.err2="Incorrect/password mismatch !! *";
+            }else{
+              this.err2="";
+              this.err1="",this.err2=""
               axios
                   .post("", {
                     fName: this.fname,
@@ -80,6 +87,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+h4{display: block;
+margin-left: 1200px;
+  margin-top: -35px;
+  position: absolute;
+}
+
 #fln{
   color: #2c3e50;
   margin-left: 2px;
@@ -95,15 +108,19 @@ input {
   padding: 15px;
   border-radius: 25px;
   width: 300px;
-  height: 20px
+  height: 20px;
 }
 select {
   color: #2c3e50;
+  margin-left: 850px;
   font-size: larger;
   padding: 15px;
   border-radius: 25px;
   width: 330px;
-  height: 55px
+  height: 55px;
+display: block;
+
+
 }
 button{
 
