@@ -63,9 +63,12 @@ export default {
       }
       if(this.password!=this.rpassword||this.password==""||this.rpassword==""){
               this.err2="Incorrect/password mismatch !! *";
-            }else{
-              this.err2="";
-              this.err1="",this.err2=""
+      }
+      else{
+        this.err2="";
+      }
+      if(this.languagesel!=""&&this.password!=""&&this.rpassword!=""&&this.password==this.rpassword){
+
               axios
                   .post("", {
                     fName: this.fname,
