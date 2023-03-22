@@ -47,7 +47,10 @@ export default {
           .then((response) => {
             console.log(response.data)
           });
+    if(true){
 
+      this.$router.push('/home');
+    }
     }
   },
 };
