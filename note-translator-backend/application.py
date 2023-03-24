@@ -38,5 +38,31 @@ def logIn():
     return jsonify({'message': 'Login successful'}), 200
 
 
+@app.route('/upload', methods=['POST'])
+def uploadNotes():
+    
+    return jsonify({'message': 'Notes upload successful'}), 200
+
+@app.route('/list', methods=['POST'])
+def listNotes():
+    
+    return jsonify({'message': 'Notes listed'}), 200
+
+@app.route('/share', methods=['POST'])
+def shareNotes():
+    
+    return jsonify({'message': 'Notes shared successful'}), 200
+
+@app.route('/delete', methods=['POST'])
+def deleteNotes():
+    
+    return jsonify({'message': 'Notes deleted successful'}), 200
+
+@app.route('/translateNotes', methods=['POST'])
+def translateNotes():
+    
+    return jsonify({'message': 'Notes translated successful'}), 200
+
+
 if __name__ == '__main__':
     app.run(debug=True)
