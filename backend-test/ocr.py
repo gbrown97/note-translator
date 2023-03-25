@@ -1,8 +1,7 @@
 import boto3
-#from trp import Document
 
-textractmodule = boto3.client('textract')
-#PAGE/LINE/WORD
+textractmodule = boto3.client('textract', aws_access_key_id='AKIAUN7YZP4UUMN4EPUN', aws_secret_access_key='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', region_name= "us-east-2")
+#LINE/WORD
 def extract_text(response, extract_by = "LINE"):
     line_text = []
     for block in response['Blocks']:
@@ -14,8 +13,7 @@ def extract_text(response, extract_by = "LINE"):
 response = textractmodule.detect_document_text(
     Document={
         'S3Object': {
-            'Bucket': bucket,
-            'Name': "input.JPG"
+            'Bucket': 'note-translator-data',
+            'Name': "note.jpg"
         }
     })
-#doc = trp.Document(response)
