@@ -1,41 +1,108 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response, abort
+from flask_sqlalchemy import SQLAlchemy # new
+from flask_marshmallow import Marshmallow
+import pathlib
+
+basedir = pathlib.Path(__file__).parent.resolve()
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{basedir / 'user.db'}" #'sqlite:///user.db' # new
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+db = SQLAlchemy(app) # new
+ma = Marshmallow(app)
+
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(32), unique=True)
+    email = db.Column(db.String(32))
+    pwd = db.Column(db.String(32))
+
+    def __repr__(self):
+        return '<USERS %s>' % self.title
+
+class UserSchema(ma.Schema):
+    class Meta:
+        fields = ("id", "username", "email","pwd")
+        model = User
+
+user_schema = UserSchema()
+users_schema = UserSchema(many=True)
 
 @app.route("/")
 def printTest():
     return "Note Translator"
 
-userDB = {}     #for testing ...need to replace
-
 @app.route('/display', methods=['POST'])
 def display():          #for testing only...remove later
-    for user in userDB:
-        print(user + "\t" + userDB[user]) 
-    return jsonify({'message': 'Users displayed'}), 201
+    people = User.query.all()
+    return users_schema.dump(people) 
+    #return jsonify({'message': 'Users displayed'}), 201
 
 @app.route('/signup', methods=['POST'])
 def signUp():
-    userName = request.json.get('username')
-    password = request.json.get('pwd')
-
-    if userName in userDB:
-        return jsonify({'error': 'Username already exists'}), 400
-    userDB[userName] = password
-
-    return jsonify({'message': 'User created'}), 201
+    new_user = User(
+            username=request.json['username'],
+            email=request.json['email'],
+            pwd=request.json['pwd']
+        )
+   
+    existing_user = User.query.filter(User.username == new_user.username).one_or_none()
+    if existing_user is None:
+        db.session.add(new_user)
+        db.session.commit()
+        return user_schema.dump(new_user), 201
+    else:
+        abort(406, f"Person already exists")
 
 
 @app.route('/login', methods=['POST'])
 def logIn():
-    userName = request.json.get('username')
-    password = request.json.get('pwd')
-
-    if userName not in userDB or userDB[userName] != password:
+    #userName = request.json.get('username')
+    #password = request.json.get('pwd')
+    user = User(
+            email=request.json['email'],
+            pwd=request.json['pwd']
+        )
+    existing_user = User.query.filter_by(email=user.email).first()
+    if not existing_user or existing_user.pwd!=user.pwd:
         return jsonify({'error': 'Invalid username/password'}), 401
     
 
     return jsonify({'message': 'Login successful'}), 200
+
+
+@app.route('/upload', methods=['POST'])
+def uploadNotes():
+    
+    return jsonify({'message': 'Notes upload successful'}), 200
+
+@app.route('/list', methods=['POST'])
+def listNotes():
+   
+   return jsonify({'message': 'Notes listed'}), 200
+   ''' userName = request.json.get('username') #get username
+    sobj = S3Storage('username')
+    if userName not in userDB :
+        return jsonify({'error': 'User doesnt exist'}), 401
+    print(sobj.listFiles())
+    '''
+   
+
+@app.route('/share', methods=['POST'])
+def shareNotes():
+    
+    return jsonify({'message': 'Notes shared successful'}), 200
+
+@app.route('/delete', methods=['POST'])
+def deleteNotes():
+    
+    return jsonify({'message': 'Notes deleted successful'}), 200
+
+@app.route('/translateNotes', methods=['POST'])
+def translateNotes():
+    
+    return jsonify({'message': 'Notes translated successful'}), 200
 
 
 if __name__ == '__main__':
