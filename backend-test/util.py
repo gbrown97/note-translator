@@ -7,10 +7,10 @@ class S3Storage:
 
   def __init__(self, userName) -> None:
     #read access key and secret access key from a json file.
-    self.s3 = boto3.resource('s3',aws_access_key_id='AKIAUN7YZP4UUMN4EPUN', aws_secret_access_key='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')
+    self.s3 = boto3.resource('s3',aws_access_key_id='', aws_secret_access_key='')
     self.bucketName = 'note-translator-data'
     self.bucket = self.s3.Bucket(self.bucketName)
-    self.s3Client = boto3.client('s3', aws_access_key_id='AKIAUN7YZP4UUMN4EPUN', aws_secret_access_key='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', region_name= "us-east-2" )
+    self.s3Client = boto3.client('s3', aws_access_key_id='', aws_secret_access_key='', region_name= "" )
     self.user = userName
     result = self.s3Client.list_objects_v2(Bucket=self.bucketName, Prefix= userName +'/')
     if 'Contents' in result:
