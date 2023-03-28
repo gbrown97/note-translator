@@ -48,11 +48,12 @@ def display():          #for testing only...remove later
 def signUp():
     print("YAY")
     new_user = User(
-            username=request.json['username'],
+            email=request.json['email'],
             password=request.json['password'],
-            fname=request.json['fName'],
-            lname=request.json['lName'],
-            setLang=request.json['selLang'],
+            fname=['fName'],
+            lname=['lName'],
+            setLang=['selLang'],
+            username=['fName'] + ['lName']
         )
    
     existing_user = User.query.filter(User.username == new_user.username).one_or_none()
@@ -70,7 +71,7 @@ def logIn():
     #password = request.json.get('pwd')
     user = User(
             email=request.json['email'],
-            pwd=request.json['password']
+            pwd=request.json['pwd']
         )
     existing_user = User.query.filter_by(email=user.email).first()
     if not existing_user or existing_user.pwd!=user.pwd:
@@ -82,7 +83,7 @@ def logIn():
 
 @app.route('/upload', methods=['POST'])
 def uploadNotes():
-
+    
     return jsonify({'message': 'Notes upload successful'}), 200
 
 @app.route('/list', methods=['POST'])
