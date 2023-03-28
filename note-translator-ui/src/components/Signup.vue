@@ -40,6 +40,9 @@ import axios from "axios";
 
 let languages = require('./languages.json');
 export default {
+  mounted () {
+  console.log ('Sineup component mounted.')
+  },
   name: 'signup-component',
   data(){
     return{
@@ -70,11 +73,11 @@ export default {
       if(this.languagesel!=""&&this.password!=""&&this.rpassword!=""&&this.password==this.rpassword){
 
               axios
-                  .post("", {
+                  .post('http://127.0.0.1:5000/signup', {
                     fName: this.fname,
                     lName: this.lname,
-                    selLan: this.languagesel,
-                    username: this.username,
+                    selLang: this.languagesel,
+                    email: this.username,
                     password: this.password,
                   })
                   .then((response) => {

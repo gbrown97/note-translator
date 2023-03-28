@@ -1,0 +1,9 @@
+Current availabe AWS Services
+    - S3 Buckets
+        - note-translator-data
+    - Users
+        - note-translator
+            - Access Key 1
+                - AKIAUN7YZP4UUMN4EPUN
+            - Secret Key 1
+                - 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
