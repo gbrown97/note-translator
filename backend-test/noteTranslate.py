@@ -2,6 +2,7 @@
 from googletrans import Translator
 from spacy.lang.xx import MultiLanguage
 from util import Storage
+import ocr
 
 class NoteTranslator:
   #Adding sentence recognizer pipeline 
@@ -19,18 +20,17 @@ class NoteTranslator:
   def __readFile(self):
     if self.filePath.endswith(".txt"):
       dataFile = self.userStorage.loadTxt(self.filePath)
-    else:  
-      self.userStorage.loadImg(self.filePath)
 
-  def __extractText(self, data):
-    pass
+  def __extractText(self, keyFile):
+    response = ocr.textract(keyFile)
+    extractedText = ocr.extract_text(response)
+    return extractedText
 
   # Method to translate the text.
   # text: input text to translate into destination langugage.
   # dest: destination language code example English -> "en".
   def translate(self, dest):
-    fileData = self.__readFile()
-    text = fileData if self.filePath.endswith(".txt") else self.__extractText(fileData)
+    text = self.__readFile() if self.filePath.endswith(".txt") else self.__extractText(self.filePath)
     # A generator object is generated using spacy consits of meaningful sentences.
     for sentence in self.nlp(text).sents:
       try:
