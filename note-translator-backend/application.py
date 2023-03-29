@@ -1,13 +1,13 @@
 from flask import Flask, request, jsonify, make_response, abort
-from flask_sqlalchemy import SQLAlchemy # new
-from flask_marshmallow import Marshmallow
+from flask_sqlalchemy import SQLAlchemy 
+from flask_marshmallow import Marshmallow    #for serializing json data---remove?
 from flask_cors import CORS
 import pathlib
 
 basedir = pathlib.Path(__file__).parent.resolve()
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{basedir / 'user.db'}" #'sqlite:///user.db' # new
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{basedir / 'user.db'}" #'sqlite:///user.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 CORS(app)
 db = SQLAlchemy(app) # new
