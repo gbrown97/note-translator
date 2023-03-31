@@ -2,13 +2,18 @@ from flask import Flask, request, jsonify, make_response, abort
 from flask_sqlalchemy import SQLAlchemy 
 from flask_marshmallow import Marshmallow    #for serializing json data---remove?
 from flask_cors import CORS
+from util import S3Storage
 import pathlib
+import os
 
 basedir = pathlib.Path(__file__).parent.resolve()
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{basedir / 'user.db'}" #'sqlite:///user.db'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+#app.config['UPLOAD_FOLDER'] = 'uploads'
+app.config['ALLOWED_EXTENSIONS'] = {'txt', 'jpg'}
+app.config['USERNAME'] = ''
 CORS(app)
 db = SQLAlchemy(app) # new
 ma = Marshmallow(app)
@@ -50,15 +55,16 @@ def signUp():
     new_user = User(
             username=request.json['username'],
             password=request.json['password'],
-            fname=request.json['fName'],
-            lname=request.json['lName'],
-            setLang=request.json['selLang'],
+            fname=request.json['fname'],
+            lname=request.json['lname'],
+            setLang=request.json['setLang'],
         )
    
     existing_user = User.query.filter(User.username == new_user.username).one_or_none()
     if existing_user is None:
         db.session.add(new_user)
         db.session.commit()
+        sobj = S3Storage(request.json['username'])
         return user_schema.dump(new_user), 201
     else:
         abort(406, f"Person already exists")
@@ -69,27 +75,55 @@ def logIn():
     #userName = request.json.get('username')
     #password = request.json.get('pwd')
     user = User(
-            email=request.json['email'],
-            pwd=request.json['password']
+            username=request.json['username'],
+            password=request.json['password']
         )
-    existing_user = User.query.filter_by(email=user.email).first()
-    if not existing_user or existing_user.pwd!=user.pwd:
+    existing_user = User.query.filter_by(username=user.username).first()
+    if not existing_user or existing_user.password!=user.password:
         return jsonify({'error': 'Invalid username/password'}), 401
     
-
+    app.config['USERNAME'] = request.json['username']
+    sobj = S3Storage(request.json['username'])
+    #app.config['sobj'] = sobj
+    print(app.config['USERNAME'])
     return jsonify({'message': 'Login successful'}), 200
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 @app.route('/upload', methods=['POST'])
 def uploadNotes():
+    #print(request)
+    #print("uploadtest")
+    print(request.files)
+    if 'file' not in request.files:
+       return jsonify({'error': 'No file selected.'}), 400
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'File is empty.'}), 400
+    username= app.config['USERNAME']
+    print(app.config['USERNAME'])
+    sobj = S3Storage(username)
+    sobj.uploadTxt(username, file.filename)
+
+    #file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
 
     return jsonify({'message': 'Notes upload successful'}), 200
 
 @app.route('/list', methods=['POST'])
 def listNotes():
-   
-   return jsonify({'message': 'Notes listed'}), 200
-   ''' userName = request.json.get('username') #get username
+   username= app.config['USERNAME']
+   print(app.config['USERNAME'])
+   sobj = S3Storage(username)
+   #userName = request.json.get('username')
+   #sobj=S3Storage(request.json.get('username'))
+   files = sobj.listFiles()
+   #files = os.listdir(app.config['UPLOAD_FOLDER'])
+   print(files)
+   return jsonify({"files": files})
+   '''return jsonify({'message': 'Notes listed'}), 200
+    userName = request.json.get('username') #get username
     sobj = S3Storage('username')
     if userName not in userDB :
         return jsonify({'error': 'User doesnt exist'}), 401
@@ -104,7 +138,8 @@ def shareNotes():
 
 @app.route('/delete', methods=['POST'])
 def deleteNotes():
-    
+    sobj=S3Storage(request.json.get('username'))
+    sobj.deleteFile(request.json.get('file'))
     return jsonify({'message': 'Notes deleted successful'}), 200
 
 @app.route('/translateNotes', methods=['POST'])
