@@ -1,0 +1,41 @@
+To create Elastic Beanstalk environment
+
+    1. Go to https://us-east-2.console.aws.amazon.com/elasticbeanstalk/home?region=us-east-2#/gettingStarted?applicationName=note-translator
+    2. Choose Python as platform and use Python 3.8 branch and default 3.5 version
+    3. Choose Sample Application
+    4. Press Create Application button, this will take several minutes.
+    5. Once sample application is created, follow https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-install.html#eb-cli3-install.scripts
+        to install the eb command line from scripts.
+        Ask about note translator access keys if not configured credentials
+
+To Change Sample Application to Note-Translator
+    1. Create a project directory.
+        ~$ mkdir eb-note-translator-backend
+        ~$ cd eb-note-translator-backend
+
+    2. Create and activate a virtual environment named virt:
+        ~$ virtualenv virt
+        ~$ source virt/bin/activate
+
+    3. Copy Note-Translator application files
+        (virt) ~$ cp ../note-translator-backend/application.py .
+        (virt) ~$ cp ../note-translator-backend/requirements.txt .
+
+    4. Install Flask requirements with pip install:
+        (virt) ~$ pip3 install -r requirements.txt
+
+    5. View the installed libraries with pip freeze:
+        (virt) ~$ pip3 freeze
+
+    6. Save the output from pip freeze to a file named requirements.txt
+        (virt) ~$ pip3 freeze > requirements.txt
+
+    7. Add .ebignore file in current directory if not exists
+
+    8. Add "virt" to .ebignore
+
+    9. Initialize your EB CLI repository with the eb init command:
+        (virt) ~$ eb init -p python-3.7 flask-tutorial --region us-east-2
+        Ask about note translator access keys if not configured credentials
+
+

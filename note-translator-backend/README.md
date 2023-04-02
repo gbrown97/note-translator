@@ -19,7 +19,7 @@ $ pip install Flask \
 TO SETUP DATABASE (ONLY ONCE)
 (env) $ python3
 >>> from application import db,app
->>> app.app_context.push()
+>>> app.app_context().push()
 >>> db.create_all()
 >>> exit()
 
