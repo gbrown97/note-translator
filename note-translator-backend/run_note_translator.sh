@@ -1,1 +1,1 @@
-python3 application.py
+python3.7 application.py
