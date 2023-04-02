@@ -1,41 +1,73 @@
-To create Elastic Beanstalk environment
+Prerequisites
+    - Note translator application.py exists and is working
+    - zip utility is installed
+    - Have an active AWS account with S3 and Elastic Beanstalk access
+    - aws cli is installed and confiugred with IAM user access and secret key
 
-    1. Go to https://us-east-2.console.aws.amazon.com/elasticbeanstalk/home?region=us-east-2#/gettingStarted?applicationName=note-translator
-    2. Choose Python as platform and use Python 3.8 branch and default 3.5 version
-    3. Choose Sample Application
-    4. Press Create Application button, this will take several minutes.
-    5. Once sample application is created, follow https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/eb-cli3-install.html#eb-cli3-install.scripts
-        to install the eb command line from scripts.
-        Ask about note translator access keys if not configured credentials
+1. Zip files
+    $ zip -r aws-note-translator-backend.zip application.py requirements.txt
 
-To Change Sample Application to Note-Translator
-    1. Create a project directory.
-        ~$ mkdir eb-note-translator-backend
-        ~$ cd eb-note-translator-backend
+2. Setup S3 bucket
+    $ aws elasticbeanstalk create-storage-location
+    This should output an S3 bucket object, similar to:
+        {
+            "S3Bucket": "elasticbeanstalk-us-east-2-304927571753"
+        }
+    Keep YOUR bucket name for next steps
 
-    2. Create and activate a virtual environment named virt:
-        ~$ virtualenv virt
-        ~$ source virt/bin/activate
+3. Upload zipped artifacts to S3 bucket
+    $ aws s3 cp aws-note-translator-backend.zip s3://elasticbeanstalk-us-east-2-304927571753/aws-note-translator-backend.zip
 
-    3. Copy Note-Translator application files
-        (virt) ~$ cp ../note-translator-backend/application.py .
-        (virt) ~$ cp ../note-translator-backend/requirements.txt .
+4. Create the Elastic Beanstalk application
+    $ aws elasticbeanstalk create-application-version \
+        --application-name note-translator-backend \
+        --version-label v1 \
+        --source-bundle S3Bucket="elasticbeanstalk-us-east-2-304927571753",S3Key="aws-note-translator-backend.zip" \
+        --auto-create-application
 
-    4. Install Flask requirements with pip install:
-        (virt) ~$ pip3 install -r requirements.txt
+5. Create the Elastic Beanstalk environment
+    a. Create an options file named "aws_options.txt" and paste the following
+        [
+            {
+                "Namespace": "aws:autoscaling:launchconfiguration",
+                "OptionName": "IamInstanceProfile",
+                "Value": "aws-elasticbeanstalk-ec2-role"
+            }
+        ]
+    b. Create the environment
+        $ aws elasticbeanstalk create-environment \
+            --application-name note-translator-backend \
+            --environment-name note-translator-backend-env \
+            --version-label v1 \
+            --solution-stack-name "64bit Amazon Linux 2 v3.5.0 running Python 3.8" \
+            --option-settings file://aws_options.txt
 
-    5. View the installed libraries with pip freeze:
-        (virt) ~$ pip3 freeze
+6. Go to AWS Elastic Beanstalk and verify that the environment is running with status OK
+    - To test run:
+        $ aws elasticbeanstalk describe-environments \
+            --environment-name note-translator-backend-env \
+            --version-label v1 \
+            --query 'Environments[0].EndpointURL'
+    This should output the url of the environment
 
-    6. Save the output from pip freeze to a file named requirements.txt
-        (virt) ~$ pip3 freeze > requirements.txt
+7. To update application version, if needed:
+    Create new zip of application and upload to S3 bucket
+    a. Update applilcation with new version label:
+        $ aws elasticbeanstalk create-application-version \
+            --application-name note-translator-backend \
+            --version-label v2 \
+            --source-bundle S3Bucket="elasticbeanstalk-us-east-2-304927571753",S3Key="aws-note-translator-backend.zip" \
+            --auto-create-application
+    b. Update environment
+        $ aws elasticbeanstalk update-environment \
+            --environment-name note-translator-backend-env \
+            --version-label v2 \
+            --option-settings file://aws_options.txt
 
-    7. Add .ebignore file in current directory if not exists
-
-    8. Add "virt" to .ebignore
-
-    9. Initialize your EB CLI repository with the eb init command:
-        (virt) ~$ eb init -p python-3.7 flask-tutorial --region us-east-2
-        Ask about note translator access keys if not configured credentials
-
-
+8. To delete:
+    a. Delete environment first:
+        $ aws elasticbeanstalk terminate-environment \
+            --environment-name note-translator-backend-env
+    b. Delete application last:
+        $ aws elasticbeanstalk delete-application \
+            --application-name note-translator-backend

@@ -11,10 +11,9 @@ source env/bin/activate
 
 DEPENDENCIES
 
-$ pip install Flask \
-    Flask-SQLAlchemy \
-    Flask-RESTful \
-    flask-marshmallow
+Run the following command in your terminal or command prompt to install dependencies
+
+./setup_note_translator.sh
 
 TO SETUP DATABASE (ONLY ONCE)
 (env) $ python3
@@ -27,6 +26,6 @@ HOW TO RUN
 
 Run the following command in your terminal or command prompt to run the application
 
-python3 application.py
+./run_note_translator.sh
 
 Navigate to "http://localhost:5000/" in a web browser.

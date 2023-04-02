@@ -53,6 +53,7 @@ def signUp():
             fname=request.json['fName'],
             lname=request.json['lName'],
             setLang=request.json['selLang'],
+            email=""
         )
    
     existing_user = User.query.filter(User.username == new_user.username).one_or_none()
@@ -114,4 +115,4 @@ def translateNotes():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host="127.0.0.1", port=5000)
