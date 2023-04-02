@@ -135,7 +135,20 @@ def listNotes():
 
 @app.route('/share', methods=['POST'])
 def shareNotes():
-    
+    sendername= app.config['USERNAME']
+    receivername= request.form['recName']
+    sender = User.query.filter_by(username=sendername).first()
+    srcLang=sender.setLang
+    receiver = User.query.filter_by(username=receivername).first()
+    destLang=receiver.setLang
+    if 'file' not in request.files:
+       return jsonify({'error': 'No file selected.'}), 400
+    file = request.files['file']
+    sobj = S3Storage(sendername)
+    objectTrans =  NoteTranslator(srcLang,file.filename,sobj)
+    transContent=objectTrans.translate(destLang)
+    sobj = S3Storage(receivername)
+    sobj.uploadTxt(transContent, file.filename)
     return jsonify({'message': 'Notes shared successful'}), 200
 
 @app.route('/delete', methods=['POST'])
