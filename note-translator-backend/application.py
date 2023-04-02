@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow    #for serializing json data---remove?
 from flask_cors import CORS
 from util import S3Storage
+from noteTranslate import NoteTranslator
 import pathlib
 import os
 
@@ -90,7 +91,7 @@ def logIn():
 
 def allowed_file(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']   
 
 @app.route('/upload', methods=['POST'])
 def uploadNotes():
@@ -104,8 +105,9 @@ def uploadNotes():
         return jsonify({'error': 'File is empty.'}), 400
     username= app.config['USERNAME']
     print(app.config['USERNAME'])
+    contents=file.read()
     sobj = S3Storage(username)
-    sobj.uploadTxt(username, file.filename)
+    sobj.uploadTxt(contents,file.filename)
 
     #file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
 
@@ -142,9 +144,22 @@ def deleteNotes():
     sobj.deleteFile(request.json.get('file'))
     return jsonify({'message': 'Notes deleted successful'}), 200
 
-@app.route('/translateNotes', methods=['POST'])
+@app.route('/translate', methods=['POST']) #explicit translate
 def translateNotes():
-    
+    sendername= app.config['USERNAME']
+    existing_user = User.query.filter_by(username=sendername).first()
+    srcLang=existing_user.setLang
+    #print(app.config['USERNAME'])
+    if 'file' not in request.files:
+       return jsonify({'error': 'No file selected.'}), 400
+    file = request.files['file']
+    sobj = S3Storage(sendername)
+    srcLang = request.form['srcLang']
+    objectTrans =  NoteTranslator(srcLang,file.filename,sobj)
+    destLang= request.form['destLang']
+    transContent=objectTrans.translate(destLang)
+    sobj = S3Storage(sendername)
+    sobj.uploadTxt(transContent, file.filename)
     return jsonify({'message': 'Notes translated successful'}), 200
 
 

@@ -2,3 +2,7 @@ flask_sqlalchemy
 flask_marshmallow
 flask_cors
 marshmallow-sqlalchemy
+googletrans==4.0.0.rc1
+spacy
+boto3
+textract-trp
