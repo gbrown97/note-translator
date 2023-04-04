@@ -52,7 +52,6 @@ def display():          #for testing only...remove later
 
 @app.route('/signup', methods=['POST'])
 def signUp():
-    print("YAY")
     new_user = User(
             username=request.json['username'],
             password=request.json['password'],
@@ -85,7 +84,6 @@ def logIn():
     
     app.config['USERNAME'] = request.json['username']
     sobj = S3Storage(request.json['username'])
-    #app.config['sobj'] = sobj
     print(app.config['USERNAME'])
     return jsonify({'message': 'Login successful'}), 200
 
@@ -95,8 +93,6 @@ def allowed_file(filename):
 
 @app.route('/upload', methods=['POST'])
 def uploadNotes():
-    #print(request)
-    #print("uploadtest")
     print(request.files)
     if 'file' not in request.files:
        return jsonify({'error': 'No file selected.'}), 400
@@ -108,35 +104,31 @@ def uploadNotes():
     contents=file.read()
     sobj = S3Storage(username)
     sobj.uploadTxt(contents,file.filename)
-
-    #file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
-
     return jsonify({'message': 'Notes upload successful'}), 200
 
 @app.route('/list', methods=['POST'])
 def listNotes():
-   username= app.config['USERNAME']
-   print(app.config['USERNAME'])
+   username=request.form['username']
+   #username= app.config['USERNAME']
+   #print(app.config['USERNAME'])
    sobj = S3Storage(username)
    #userName = request.json.get('username')
    #sobj=S3Storage(request.json.get('username'))
    files = sobj.listFiles()
-   #files = os.listdir(app.config['UPLOAD_FOLDER'])
    print(files)
    return jsonify({"files": files})
-   '''return jsonify({'message': 'Notes listed'}), 200
-    userName = request.json.get('username') #get username
-    sobj = S3Storage('username')
-    if userName not in userDB :
-        return jsonify({'error': 'User doesnt exist'}), 401
-    print(sobj.listFiles())
-    '''
-   
+
+@app.route('/send',methods=['POST'])
+def sendUserDetails():
+    username=request.json['username'],
+    password=request.json['password'],
 
 @app.route('/share', methods=['POST'])
 def shareNotes():
-    sendername= app.config['USERNAME']
+    sendername=request.form['username']
+    #sendername= app.config['USERNAME']
     receivername= request.form['recName']
+    print(sendername+ " "+receivername )
     sender = User.query.filter_by(username=sendername).first()
     srcLang=sender.setLang
     receiver = User.query.filter_by(username=receivername).first()
@@ -159,7 +151,8 @@ def deleteNotes():
 
 @app.route('/translate', methods=['POST']) #explicit translate
 def translateNotes():
-    sendername= app.config['USERNAME']
+    sendername=request.form['username']
+    #sendername= app.config['USERNAME']
     existing_user = User.query.filter_by(username=sendername).first()
     srcLang=existing_user.setLang
     #print(app.config['USERNAME'])
@@ -175,6 +168,18 @@ def translateNotes():
     sobj.uploadTxt(transContent, file.filename)
     return jsonify({'message': 'Notes translated successful'}), 200
 
+@app.route('/view', methods=['POST'])
+def viewFile():
+    username=request.form['username']
+    #username= app.config['USERNAME']
+    file = request.files['file']
+    user = User.query.filter_by(username=username).first()
+    sobj = S3Storage(username)
+    srcLang=user.setLang
+    objectFile = NoteTranslator(srcLang,file.filename,sobj)
+    fileContents = objectFile.readFile()
+    print(fileContents)
+    return fileContents
 
 if __name__ == '__main__':
     app.run(debug=True)
