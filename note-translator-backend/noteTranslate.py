@@ -43,3 +43,7 @@ class NoteTranslator:
         except:
           self.translatedText = self.translatedText + str(sentence) + " "
     return self.translatedText  # returns the translated text.
+  def readFile(self):
+    text= self.__readFile()
+    contents=text.read()
+    return contents.decode()
