@@ -100,8 +100,9 @@ def uploadNotes():
     file = request.files['file']
     if file.filename == '':
         return jsonify({'error': 'File is empty.'}), 400
-    username= app.config['USERNAME']
-    print(app.config['USERNAME'])
+    #username= app.config['USERNAME']
+    #print(app.config['USERNAME'])
+    username=request.form['username']
     contents=file.read()
     sobj = S3Storage(username)
     sobj.uploadTxt(contents,file.filename)
@@ -109,7 +110,7 @@ def uploadNotes():
 
 @app.route('/list', methods=['POST'])
 def listNotes():
-   username=request.form['username']
+   username=request.json['username']
    #username= app.config['USERNAME']
    #print(app.config['USERNAME'])
    sobj = S3Storage(username)
@@ -121,63 +122,78 @@ def listNotes():
 
 @app.route('/send',methods=['POST'])
 def sendUserDetails():
-    username=request.json['username'],
-    password=request.json['password'],
+    user = User(
+            username=request.json['username'],
+            password=request.json['password']
+        )
+    existinguser = User.query.filter_by(username=user.username).first()
+    if existinguser:
+        userDetails= (existinguser.username,
+                  existinguser.fname,
+                  existinguser.lname,
+                  existinguser.setLang)
+        return jsonify({"userDetails": userDetails})
+    return jsonify({'message': 'User does not exist'}), 400
 
 @app.route('/share', methods=['POST'])
 def shareNotes():
-    sendername=request.form['username']
+    sendername=request.json['username']
     #sendername= app.config['USERNAME']
-    receivername= request.form['recName']
+    receivername= request.json['recName']
     print(sendername+ " "+receivername )
     sender = User.query.filter_by(username=sendername).first()
     srcLang=sender.setLang
     receiver = User.query.filter_by(username=receivername).first()
     destLang=receiver.setLang
-    if 'file' not in request.files:
-       return jsonify({'error': 'No file selected.'}), 400
-    file = request.files['file']
+    #if 'file' not in request.files:
+     #  return jsonify({'error': 'No file selected.'}), 400
+    #file = request.files['file']
+    file=request.json['file']
+    if not file:
+        return jsonify({'error': 'No file selected.'}), 400
     sobj = S3Storage(sendername)
-    objectTrans =  NoteTranslator(srcLang,file.filename,sobj)
+    objectTrans =  NoteTranslator(srcLang,file,sobj)
     transContent=objectTrans.translate(destLang)
     sobj = S3Storage(receivername)
-    sobj.uploadTxt(transContent, file.filename)
+    sobj.uploadTxt(transContent, file)
     return jsonify({'message': 'Notes shared successful'}), 200
 
 @app.route('/delete', methods=['POST'])
 def deleteNotes():
-    sobj=S3Storage(request.json.get('username'))
-    sobj.deleteFile(request.json.get('file'))
+    sobj=S3Storage(request.json['username'])
+    sobj.deleteFile(request.json['file'])
     return jsonify({'message': 'Notes deleted successful'}), 200
 
 @app.route('/translate', methods=['POST']) #explicit translate
 def translateNotes():
-    sendername=request.form['username']
+    sendername=request.json['username']
     #sendername= app.config['USERNAME']
     existing_user = User.query.filter_by(username=sendername).first()
     srcLang=existing_user.setLang
     #print(app.config['USERNAME'])
-    if 'file' not in request.files:
-       return jsonify({'error': 'No file selected.'}), 400
-    file = request.files['file']
+    file=request.json['file']
+    #if 'file' not in request.files:
+     #  return jsonify({'error': 'No file selected.'}), 400
+    #file = request.files['file']
     sobj = S3Storage(sendername)
-    srcLang = request.form['srcLang']
-    objectTrans =  NoteTranslator(srcLang,file.filename,sobj)
-    destLang= request.form['destLang']
+    srcLang = request.json['srcLang']
+    objectTrans =  NoteTranslator(srcLang,file,sobj)
+    destLang= request.json['destLang']
     transContent=objectTrans.translate(destLang)
     sobj = S3Storage(sendername)
-    sobj.uploadTxt(transContent, file.filename)
+    sobj.uploadTxt(transContent, file)
     return jsonify({'message': 'Notes translated successful'}), 200
 
 @app.route('/view', methods=['POST'])
 def viewFile():
-    username=request.form['username']
+    username=request.json['username']
     #username= app.config['USERNAME']
-    file = request.files['file']
+    #file = request.files['file']
+    file=request.json['file']
     user = User.query.filter_by(username=username).first()
     sobj = S3Storage(username)
     srcLang=user.setLang
-    objectFile = NoteTranslator(srcLang,file.filename,sobj)
+    objectFile = NoteTranslator(srcLang,file,sobj)
     fileContents = objectFile.readFile()
     print(fileContents)
     return fileContents
