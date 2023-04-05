@@ -1,8 +1,10 @@
 <template>
   <navMenu></navMenu>
-  <h1>Upload a file !</h1><br>
-  <input id="fl" type="file"><br><br>
-  <button id="btn">Upload</button>
+  <h1>Share a file !</h1>
+  <br>
+  <button id="btn">New</button>
+  <newPop></newPop>
+  <br>
   <br>
   <br>
   <table>
@@ -14,7 +16,7 @@
 
       <td><a href="www.google.com">{{ item.fileName }}</a></td>
       <td>
-        <button id="btnn">View</button>
+        <button id="btnn" @click="view(item.fileName)">View</button>
         <button id="btnn">Share</button>
         <button id="btnn">Delete</button>
       </td>
@@ -24,10 +26,12 @@
 </template>
 <script>
 import navMenu from './navMenu.vue'
+import newPop from './popUpNew.vue'
 export default {
 
   components: {
-    navMenu: navMenu
+    navMenu: navMenu,
+    newPop: newPop
   },
   data(){
     return{
@@ -38,7 +42,13 @@ export default {
 
       ]
     }
-  }
+  },
+  methods: {
+    view(obj) {
+
+      alert(obj)
+    }}
+
 }
 </script>
 <style>

@@ -4,7 +4,7 @@
     <img src="noteTrans.png" alt="Note Translator">
     <h1>Welcome to Note Translation</h1>
     <br>
-    <form>
+    <form @submit.prevent="onLogin">
     <input type="text" placeholder="Username" v-model="username">
     <br>
     <br>
@@ -12,7 +12,7 @@
     <br>
     <br>
 
-      <button @click="onLogin()">Login</button>
+      <button>Login</button>
 
       <button @click="$router.push('/signup')">Signup</button>
 
@@ -33,25 +33,26 @@ export default {
 
       username: "",
       password: "",
+
     };
   },
   methods:{
-    onLogin() {
-
-      axios
-          .post("", {
-
+   async  onLogin() {
+     try{
+     const response = await axios
+          .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/login", {
             username: this.username,
             password: this.password,
-          })
-          .then((response) => {
-            console.log(response.data)
           });
-    if(true){
+       if(response.data.message != null){
+         this.$router.push('/home');
+       }
+     }
+   catch (err) {
+       alert("Invalid username/password")
+     }
+   }
 
-      this.$router.push('/home');
-    }
-    }
   },
 };
 </script>
