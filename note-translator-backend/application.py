@@ -116,14 +116,17 @@ def listNotes():
    #userName = request.json.get('username')
    #sobj=S3Storage(request.json.get('username'))
    files = sobj.listFiles()
-   print(files)
-   return jsonify({"files": files})
+   fileslist= []
+   for i in range(len(files)):
+       if files[i].startswith(username + "/") and files[i] != username+"/":
+           fileslist.append(files[i][len(username + "/"):])
+                  
+   return jsonify({"files": fileslist})
 
 @app.route('/send',methods=['POST'])
 def sendUserDetails():
     user = User(
-            username=request.json['username'],
-            password=request.json['password']
+            username=request.json['username']
         )
     existinguser = User.query.filter_by(username=user.username).first()
     if existinguser:
