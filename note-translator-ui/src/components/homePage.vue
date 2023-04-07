@@ -2,8 +2,12 @@
   <navMenu></navMenu>
   <h1>Share a file !</h1>
   <br>
-  <button id="btn">New</button>
-  <newPop></newPop>
+  <button id="btn" @click="() => TogglePopup('buttonTrigger')">New</button>
+  <Popup
+      v-if="popupTriggers.buttonTrigger"
+      :TogglePopup="() => TogglePopup('buttonTrigger')">
+
+  </Popup>
   <br>
   <br>
   <br>
@@ -26,17 +30,35 @@
 </template>
 <script>
 import navMenu from './navMenu.vue'
-import newPop from './popUpNew.vue'
+import Popup from './popUpNew.vue'
+import axios from "axios";
+import { ref } from 'vue';
 export default {
+  mounted() {
+    this.onLoad();
+  },
+  setup () {
+    const popupTriggers = ref({
+      buttonTrigger: false,
 
+    });
+    const TogglePopup = (trigger) => {
+      popupTriggers.value[trigger] = !popupTriggers.value[trigger]
+    }
+    return {
+      Popup,
+      popupTriggers,
+      TogglePopup
+    }
+  },
   components: {
     navMenu: navMenu,
-    newPop: newPop
+    Popup: Popup
   },
   data(){
     return{
       items: [
-        { fileName: "heelow.c"},
+        { fileName: "sample.txt"},
         { fileName: "dgd.png"},
         { fileName: "error.jpg"}
 
@@ -44,10 +66,46 @@ export default {
     }
   },
   methods: {
-    view(obj) {
+   async view(obj) {
+     try{
+       const response = await axios
+           .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/view", {
+             username: localStorage.username,
+             file: obj
+           });
+       if(response.data.message != null){
+         this.$router.push('/home');
+       }
+     }catch (err) {
+       console.log(err);
+     }
 
-      alert(obj)
-    }}
+    },
+    async  onLoad() {
+      try{
+        const response = await axios
+            .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/send", {
+              username: localStorage.username
+            });
+        if(response.data.message != null){
+          this.$router.push('/home');
+        }
+      }catch (err) {
+        console.log(err);
+      }
+      try{
+        const response = await axios
+            .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/list", {
+              username: localStorage.username
+            });
+        if(response.data.message != null){
+          this.$router.push('/home');
+        }
+      }catch (err) {
+        console.log(err);
+      }
+      },
+  }
 
 }
 </script>

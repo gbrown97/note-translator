@@ -45,6 +45,7 @@ export default {
             password: this.password,
           });
        if(response.data.message != null){
+         localStorage.setItem('username',this.username)
          this.$router.push('/home');
        }
      }

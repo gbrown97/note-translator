@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5755ae2-d3fb-4133-85e1-ad1057643980" name="Changes" comment="branch sync">
+    <list default="true" id="b5755ae2-d3fb-4133-85e1-ad1057643980" name="Changes" comment="UI-backend integration">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/note-translator-ui/src/components/Signup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/note-translator-ui/src/components/Signup.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/note-translator-ui/src/components/homePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/note-translator-ui/src/components/homePage.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/note-translator-ui/src/components/noteTransl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/note-translator-ui/src/components/noteTransl.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/note-translator-ui/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/note-translator-ui/src/main.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,21 +48,24 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/patlo/Desktop/DC_Project&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/patlo/Desktop/DC_Project/note-translator/note-translator-ui/public",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\patlo\Desktop\DC_Project\note-translator\note-translator-ui\public" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\patlo\Desktop\DC_Project\note-translator\note-translator-ui\src\components" />
     </key>
@@ -90,7 +93,7 @@
       <workItem from="1680124744082" duration="2757000" />
       <workItem from="1680655830995" duration="2401000" />
       <workItem from="1680701445308" duration="4258000" />
-      <workItem from="1680705769996" duration="4799000" />
+      <workItem from="1680705769996" duration="28428000" />
     </task>
     <task id="LOCAL-00001" summary="SignUp Page">
       <created>1678995057874</created>
@@ -141,7 +144,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680100534036</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="UI-backend integration">
+      <created>1680713285125</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1680713285125</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -154,6 +164,7 @@
     <MESSAGE value="signup validation" />
     <MESSAGE value="home and profile page" />
     <MESSAGE value="branch sync" />
-    <option name="LAST_COMMIT_MESSAGE" value="branch sync" />
+    <MESSAGE value="UI-backend integration" />
+    <option name="LAST_COMMIT_MESSAGE" value="UI-backend integration" />
   </component>
 </project>
