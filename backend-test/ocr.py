@@ -19,3 +19,4 @@ def textract(fileKey):
                 'Name': fileKey
             }
         })
+    return response
