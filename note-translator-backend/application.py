@@ -116,14 +116,17 @@ def listNotes():
    #userName = request.json.get('username')
    #sobj=S3Storage(request.json.get('username'))
    files = sobj.listFiles()
-   print(files)
-   return jsonify({"files": files})
+   fileslist= []
+   for i in range(len(files)):
+       if files[i].startswith(username + "/") and files[i] != username+"/":
+           fileslist.append(files[i][len(username + "/"):])
+                  
+   return jsonify({"files": fileslist})
 
 @app.route('/send',methods=['POST'])
 def sendUserDetails():
     user = User(
-            username=request.json['username'],
-            password=request.json['password']
+            username=request.json['username']
         )
     existinguser = User.query.filter_by(username=user.username).first()
     if existinguser:
@@ -133,6 +136,20 @@ def sendUserDetails():
                   existinguser.setLang)
         return jsonify({"userDetails": userDetails})
     return jsonify({'message': 'User does not exist'}), 400
+
+@app.route('/users',methods=['POST'])
+def sendUsers():
+    users = User.query.all()
+    userlist=[]
+    #usernames = [user.username for user in users]
+    for user in users:
+        userdict = {
+            'username':user.username,
+            'name':user.fname +" "+user.lname,
+            'setLang':user.setLang
+        }
+        userlist.append(userdict)
+    return jsonify(userlist)
 
 @app.route('/share', methods=['POST'])
 def shareNotes():
@@ -152,9 +169,14 @@ def shareNotes():
         return jsonify({'error': 'No file selected.'}), 400
     sobj = S3Storage(sendername)
     objectTrans =  NoteTranslator(srcLang,file,sobj)
-    transContent=objectTrans.translate(destLang)
+    transContent=objectTrans.translate(destLang,sendername)
     sobj = S3Storage(receivername)
-    sobj.uploadTxt(transContent, file)
+    if file.endswith(".txt"):
+        sobj.uploadTxt(transContent, file)
+    else:
+        filename = file.split(".")[0] + ".txt"
+        print(filename)
+        sobj.uploadTxt(transContent, filename) 
     return jsonify({'message': 'Notes shared successful'}), 200
 
 @app.route('/delete', methods=['POST'])
@@ -178,9 +200,14 @@ def translateNotes():
     srcLang = request.json['srcLang']
     objectTrans =  NoteTranslator(srcLang,file,sobj)
     destLang= request.json['destLang']
-    transContent=objectTrans.translate(destLang)
+    transContent=objectTrans.translate(destLang,sendername)
     sobj = S3Storage(sendername)
-    sobj.uploadTxt(transContent, file)
+    if file.endswith(".txt"):
+        sobj.uploadTxt(transContent, file)
+    else:
+        filename = file.split(".")[0] + ".txt"
+        print(filename)
+        sobj.uploadTxt(transContent, filename)    
     return jsonify({'message': 'Notes translated successful'}), 200
 
 @app.route('/view', methods=['POST'])
@@ -193,7 +220,7 @@ def viewFile():
     sobj = S3Storage(username)
     srcLang=user.setLang
     objectFile = NoteTranslator(srcLang,file,sobj)
-    fileContents = objectFile.readFile()
+    fileContents = objectFile.readFile(username)
     print(fileContents)
     return fileContents
 
