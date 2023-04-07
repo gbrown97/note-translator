@@ -19,7 +19,8 @@ class NoteTranslator:
   #method to read txt/jpg file.
   def __readFile(self):
     if self.filePath.endswith(".txt"):
-      dataFile = self.userStorage.loadTxt(self.filePath)
+      datatext,dataFile = self.userStorage.loadTxt(self.filePath)
+      return datatext.read()
 
   def __extractText(self, keyFile):
     response = ocr.textract(keyFile)
@@ -29,8 +30,8 @@ class NoteTranslator:
   # Method to translate the text.
   # text: input text to translate into destination langugage.
   # dest: destination language code example English -> "en".
-  def translate(self, dest):
-    text = self.__readFile() if self.filePath.endswith(".txt") else self.__extractText(self.filePath)
+  def translate(self, dest, userName=None):
+    text = self.__readFile() if self.filePath.endswith(".txt") else self.__extractText(userName +'/'+ self.filePath)
     # A generator object is generated using spacy consits of meaningful sentences.
     for sentence in self.nlp(text).sents:
       try:
