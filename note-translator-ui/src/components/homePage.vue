@@ -162,6 +162,7 @@ export default {
     },
     async transContent() {
       this.upld = true;
+      this.errMsg="";
       try{
         const response = await axios
             .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/translate", {
@@ -177,6 +178,7 @@ export default {
         }
       }catch (err) {
         this.upld = false;
+        this.errMsg="Error translating the file !!"
         console.log(err);
       }
 

@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5755ae2-d3fb-4133-85e1-ad1057643980" name="Changes" comment="UI-backend integration part 2">
+    <list default="true" id="b5755ae2-d3fb-4133-85e1-ad1057643980" name="Changes" comment="UI-backend integration final part">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/note-translator-ui/src/components/homePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/note-translator-ui/src/components/homePage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/note-translator-ui/src/components/navMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/note-translator-ui/src/components/navMenu.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/note-translator-ui/src/components/popUpNew.vue" beforeDir="false" afterPath="$PROJECT_DIR$/note-translator-ui/src/components/popUpNew.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/note-translator-ui/src/components/languages.json" beforeDir="false" afterPath="$PROJECT_DIR$/note-translator-ui/src/components/languages.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,6 +96,8 @@
       <workItem from="1680870141382" duration="13379000" />
       <workItem from="1680925975450" duration="828000" />
       <workItem from="1680951424109" duration="7985000" />
+      <workItem from="1680967130824" duration="49000" />
+      <workItem from="1680971833682" duration="2388000" />
     </task>
     <task id="LOCAL-00001" summary="SignUp Page">
       <created>1678995057874</created>
@@ -161,7 +162,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680842998368</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="UI-backend integration final part">
+      <created>1680967167811</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1680967167811</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -176,6 +184,7 @@
     <MESSAGE value="branch sync" />
     <MESSAGE value="UI-backend integration" />
     <MESSAGE value="UI-backend integration part 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="UI-backend integration part 2" />
+    <MESSAGE value="UI-backend integration final part" />
+    <option name="LAST_COMMIT_MESSAGE" value="UI-backend integration final part" />
   </component>
 </project>
