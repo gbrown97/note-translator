@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5755ae2-d3fb-4133-85e1-ad1057643980" name="Changes" comment="UI-backend integration final part">
+    <list default="true" id="b5755ae2-d3fb-4133-85e1-ad1057643980" name="Changes" comment="languages supported">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/note-translator-ui/src/components/homePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/note-translator-ui/src/components/homePage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/note-translator-ui/src/components/languages.json" beforeDir="false" afterPath="$PROJECT_DIR$/note-translator-ui/src/components/languages.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +96,7 @@
       <workItem from="1680925975450" duration="828000" />
       <workItem from="1680951424109" duration="7985000" />
       <workItem from="1680967130824" duration="49000" />
-      <workItem from="1680971833682" duration="2388000" />
+      <workItem from="1680971833682" duration="2713000" />
     </task>
     <task id="LOCAL-00001" summary="SignUp Page">
       <created>1678995057874</created>
@@ -169,7 +168,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680967167811</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="languages supported">
+      <created>1680983183068</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1680983183068</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -185,6 +191,7 @@
     <MESSAGE value="UI-backend integration" />
     <MESSAGE value="UI-backend integration part 2" />
     <MESSAGE value="UI-backend integration final part" />
-    <option name="LAST_COMMIT_MESSAGE" value="UI-backend integration final part" />
+    <MESSAGE value="languages supported" />
+    <option name="LAST_COMMIT_MESSAGE" value="languages supported" />
   </component>
 </project>

@@ -60,7 +60,7 @@
     </tr>
     <tr v-for="item in items" >
 
-      <td><a href="">{{ item }}</a></td>
+      <td><a href="" @click="download(item)">{{ item }}</a></td>
       <td>
         <button id="btnn" @click="viewContent(item)">View</button>
         <button id="btnn" @click="transFile(item)">Translate</button>
@@ -227,6 +227,21 @@ export default {
               file: fileName
             });
         if(response.data.message == "Notes deleted successful"){
+          this.$router.go(0);
+        }
+      }catch (err) {
+        console.log(err);
+      }
+
+    },
+    async download(fileName) {
+      try{
+        const response = await axios
+            .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/download", {
+              username: localStorage.username,
+              file: fileName
+            });
+        if(response.data!=null){
           this.$router.go(0);
         }
       }catch (err) {
