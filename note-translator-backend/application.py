@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, make_response, abort
+from flask import Flask, request, jsonify, make_response, abort,redirect
 from flask_sqlalchemy import SQLAlchemy 
 from flask_marshmallow import Marshmallow    #for serializing json data---remove?
 from flask_cors import CORS
@@ -6,6 +6,7 @@ from util import S3Storage
 from noteTranslate import NoteTranslator
 import pathlib
 import os
+import requests
 
 basedir = pathlib.Path(__file__).parent.resolve()
 
@@ -31,7 +32,7 @@ class User(db.Model):
 
     def __repr__(self):
         return '<USERS %s>' % self.title
-
+     
 class UserSchema(ma.Schema):
     class Meta:
         fields = ("id","email", "username", "password",'fname','lname','setLang')
@@ -224,6 +225,19 @@ def viewFile():
     fileContents = objectFile.readFile(username)
     print(fileContents)
     return fileContents
+
+@app.route('/download', methods=['POST'])
+def downloadFile():
+    username=request.json['username']
+    file=request.json['file']
+    user = User.query.filter_by(username=username).first()
+    sobj = S3Storage(username)
+    srcLang=user.setLang
+    objectFile = NoteTranslator(srcLang,file,sobj)
+    url = sobj.create_presigned_url(file)
+    print(url)
+    return redirect(url)
+    return jsonify({'download link': url}), 200
 
 if __name__ == '__main__':
     app.run(debug=True, host="127.0.0.1", port=5000)

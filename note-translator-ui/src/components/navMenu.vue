@@ -2,16 +2,22 @@
   <div class="topnav">
     <a class="act" @click="$router.push('/home')" >Home</a>
     <a class="pro" @click="$router.push('/profile')">Profile</a>
-    <p>welcome {{user}}</p>
-    <a class="inact" @click="$router.push('/')">Logout</a>
+    <slot/>
+    <a class="inact" @click="logout">Logout</a>
   </div>
 </template>
 <script>
 export default {
+  methods:{
+    logout(){
+      localStorage.username="";
+      this.$router.push('/')
+    }
+  },
    data()
 {
 return{
-  user : "uday"
+
 }
 }
 }

@@ -16,7 +16,7 @@
       <h4 style="color:red;">{{err1}}</h4>
 
       <br>
-      <input type="text" placeholder="Email/Username" v-model="username">
+      <input type="text" placeholder="Email/Username" v-model="username"><h4 style="color:red;">{{err3}}</h4>
       <br>
       <br>
       <div>
@@ -48,6 +48,7 @@ export default {
     return{
       err1:'',
       err2:'',
+      err3:'',
       languagesList: languages,
       fname:"",
       lname:"",
@@ -73,16 +74,24 @@ export default {
       if(this.languagesel!=""&&this.password!=""&&this.rpassword!=""&&this.password==this.rpassword){
 
               axios
-                  .post('http://127.0.0.1:5000/signup', {
-                    fName: this.fname,
-                    lName: this.lname,
-                    selLang: this.languagesel,
-                    email: this.username,
+                  .post('http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/signup', {
+                    username: this.username,
                     password: this.password,
+                    fname: this.fname,
+                    lname: this.lname,
+                    setLang: this.languagesel
+
                   })
                   .then((response) => {
                     console.log(response.data)
-                  });
+                   alert("Account created successfully !!!")
+                    this.$router.push('/')
+                  }).catch((error) => {
+
+                       if(error.message=="Request failed with status code 406"){
+                          this.err3="Username already exists !!"
+                       }
+              });
             }
     }
 
