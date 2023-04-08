@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b5755ae2-d3fb-4133-85e1-ad1057643980" name="Changes" comment="languages supported">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/note-translator-ui/src/components/homePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/note-translator-ui/src/components/homePage.vue" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="6b7d3ab1-c208-4268-9f08-dde4c19227ea" />
+        <option name="url" value="https://github.com/gbrown97/note-translator.git" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/note-translator-ui/src/main.js" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2MyBiHwCPuUleFmLfm8UO8VY0Fv" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/patlo/Desktop/DC_Project/note-translator/note-translator-ui/public&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\patlo\Desktop\DC_Project\note-translator\note-translator-ui\public" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\patlo\Desktop\DC_Project\note-translator\note-translator-ui\src\components" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b5755ae2-d3fb-4133-85e1-ad1057643980" name="Changes" comment="" />
+      <created>1678730067503</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1678730067503</updated>
+      <workItem from="1678730069807" duration="152000" />
+      <workItem from="1678899218731" duration="3838000" />
+      <workItem from="1678922410291" duration="2691000" />
+      <workItem from="1678925136856" duration="125000" />
+      <workItem from="1678925273324" duration="2795000" />
+      <workItem from="1678989954888" duration="6831000" />
+      <workItem from="1679010239491" duration="78000" />
+      <workItem from="1679069191369" duration="708000" />
+      <workItem from="1679242691237" duration="4635000" />
+      <workItem from="1679248213041" duration="26459000" />
+      <workItem from="1679847409094" duration="1190000" />
+      <workItem from="1680051405864" duration="1785000" />
+      <workItem from="1680124744082" duration="2757000" />
+      <workItem from="1680655830995" duration="2401000" />
+      <workItem from="1680701445308" duration="4258000" />
+      <workItem from="1680705769996" duration="29381000" />
+      <workItem from="1680870141382" duration="13379000" />
+      <workItem from="1680925975450" duration="828000" />
+      <workItem from="1680951424109" duration="7985000" />
+      <workItem from="1680967130824" duration="49000" />
+      <workItem from="1680971833682" duration="2713000" />
+    </task>
+    <task id="LOCAL-00001" summary="SignUp Page">
+      <created>1678995057874</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1678995057874</updated>
+    </task>
+    <task id="LOCAL-00002" summary="language dropdown">
+      <created>1679010174669</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1679010174669</updated>
+    </task>
+    <task id="LOCAL-00003" summary="backend integration">
+      <created>1679336343007</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1679336343007</updated>
+    </task>
+    <task id="LOCAL-00004" summary="signup validation">
+      <created>1679436841399</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1679436841399</updated>
+    </task>
+    <task id="LOCAL-00005" summary="signup validation">
+      <created>1679437306685</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1679437306685</updated>
+    </task>
+    <task id="LOCAL-00006" summary="home and profile page">
+      <created>1679526696725</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1679526696725</updated>
+    </task>
+    <task id="LOCAL-00007" summary="branch sync">
+      <created>1680100534036</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1680100534036</updated>
+    </task>
+    <task id="LOCAL-00008" summary="UI-backend integration">
+      <created>1680713285125</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1680713285125</updated>
+    </task>
+    <task id="LOCAL-00009" summary="UI-backend integration part 2">
+      <created>1680842998368</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1680842998368</updated>
+    </task>
+    <task id="LOCAL-00010" summary="UI-backend integration final part">
+      <created>1680967167811</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1680967167811</updated>
+    </task>
+    <task id="LOCAL-00011" summary="languages supported">
+      <created>1680983183068</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1680983183068</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="SignUp Page" />
+    <MESSAGE value="language dropdown" />
+    <MESSAGE value="backend integration" />
+    <MESSAGE value="signup validation" />
+    <MESSAGE value="home and profile page" />
+    <MESSAGE value="branch sync" />
+    <MESSAGE value="UI-backend integration" />
+    <MESSAGE value="UI-backend integration part 2" />
+    <MESSAGE value="UI-backend integration final part" />
+    <MESSAGE value="languages supported" />
+    <option name="LAST_COMMIT_MESSAGE" value="languages supported" />
+  </component>
+</project>
