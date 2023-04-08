@@ -2,16 +2,18 @@
 
   <div class="popup">
     <div class="popup-inner">
+      <h1 style="color:red;">{{sts}}</h1>
+      <upload id="updl" v-if="upld">
 
+      </upload><br><br>
       <form @submit.prevent="onUpload">
-        <h1 style="color:red;">{{sts}}</h1>
-        <upload id="updl" v-if="upld">
 
-        </upload><br><br>
       <input type="file" @change="uploadFile" ref="file">
-      <input type="text" placeholder="username" v-model="username">&nbsp
-      <input type="text" placeholder="language" v-model="language">&nbsp
-      <button>Upload</button><br><br>
+        <select class="form-control" v-model="recUsername">
+          <option  value="">Send to</option>
+          <option :value="user.username"  v-for="(user) in usersList" :key="user.username">{{user.name}}</option>
+        </select>&nbsp
+        <button>Upload</button><br><br>
       <button class="popup-close" @click="TogglePopup()">
         Cancel
       </button>
@@ -25,6 +27,9 @@
 import axios from "axios";
 import upload from './uploading.vue'
 export default {
+  mounted() {
+    this.onLoad();
+  },
   components:{
     upload
   },
@@ -36,46 +41,60 @@ export default {
       language: "",
       file:null,
       upld:false,
-      sts:''
+      sts:'',
+      usersList:null,
+      recUsername:''
 
     };
   },
   methods:{
-    uploadFile() {
+    async onLoad(){
+    try{
+      const response = await axios
+          .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/users", {
+
+          });
+
+      if(response.data != null){
+  this.usersList=response.data;
+
+}
+}catch (err) {
+  console.log(err);
+}
+},
+uploadFile() {
 
       this.file = this.$refs.file.files[0];
     },
     async  onUpload() {
+      if(this.recUsername==""){
+        alert("Select a user !!")
+      }
       this.upld = true;
       this.sts="";
       let formData = new FormData();
+      let response1;
 
 
       formData.append('file',this.file);
-      formData.append('username',this.username);
+      formData.append('username',this.recUsername);
 
 
         try{
         const response = await axios
             .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/upload", formData);
 
-        const response1 = await axios
-              .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/translate", {
-                username: localStorage.username,
-                file: this.file.name,
-                srcLang: "en",
-                destLang:this.language
+          if(response.data.message == "Notes upload successful") {
+             this.response1 = await axios
+                .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/share", {
+                  username: localStorage.username,
+                  file: this.file.name,
+                  recName: this.recUsername
 
-              });
-          const response2 = await axios
-              .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/share", {
-                username: localStorage.username,
-                file: this.file.name,
-                recName: this.username
-
-              });
-
-        if(response.data.message == "Notes upload successful"){
+                });
+          }
+        if(this.response1.data.message == "Notes shared successful"){
           this.$router.go(0);
         }
       }
@@ -111,4 +130,14 @@ export default {
 #updl{
   align: center;
 }
+select {
+  color: #2c3e50;
+  font-size: medium;
+  border-radius: 25px;
+  width: 300px;
+  height: 40px;
+font-weight: bold;
+
+}
+
 </style>

@@ -1,5 +1,7 @@
 <template>
-  <navMenu></navMenu>
+  <navMenu>
+    <p>welcome {{user}}</p>
+  </navMenu>
   <h1>Share a file !</h1>
   <br>
   <button id="btn" @click="() => TogglePopup('buttonTrigger')">New</button>
@@ -8,6 +10,46 @@
       :TogglePopup="() => TogglePopup('buttonTrigger')">
 
   </Popup>
+  <PopView v-if=open>
+    <h3>{{cont}}</h3>
+    <button class="popup-close"  @click="close()">
+      Cancel
+    </button>
+  </PopView>
+
+  <PopView v-if=trans>
+    <h3 style="color: red">{{errMsg}}</h3>
+    <upload id="updl" v-if="upld">
+
+    </upload><br><br>
+    <form @submit.prevent="transContent">
+      <select class="form-control" v-model="languagesel">
+        <option  value="">Select preferred language</option>
+        <option :value="language.name"  v-for="(language) in languagesList" :key="language.name">{{language.name}}</option>
+      </select>&nbsp
+      <button>Translate</button><br><br>
+    </form>
+    <button class="popup-close"  @click="tClose()">
+      Cancel
+    </button>
+  </PopView>
+
+  <PopView v-if=share>
+    <h3 style="color: red">{{errMsg}}</h3>
+    <upload id="updl" v-if="upld">
+
+    </upload><br><br>
+    <form @submit.prevent="send">
+    <select class="form-control" v-model="recUsername">
+      <option  value="">Send to</option>
+      <option :value="user.username"  v-for="(user) in usersList" :key="user.username">{{user.name}}</option>
+    </select>&nbsp
+    <button>Send</button><br><br>
+    <button class="popup-close"  @click="cloShare()">
+      Cancel
+    </button>
+      </form>
+  </PopView>
   <br>
   <br>
   <br>
@@ -18,11 +60,12 @@
     </tr>
     <tr v-for="item in items" >
 
-      <td><a href="www.google.com">{{ item.fileName }}</a></td>
+      <td><a href="">{{ item }}</a></td>
       <td>
-        <button id="btnn" @click="view(item.fileName)">View</button>
-        <button id="btnn">Share</button>
-        <button id="btnn">Delete</button>
+        <button id="btnn" @click="viewContent(item)">View</button>
+        <button id="btnn" @click="transFile(item)">Translate</button>
+        <button id="btnn" @click="shareFile(item)">Share</button>
+        <button id="btnn" @click="deleteFile(item)">Delete</button>
       </td>
 
     </tr>
@@ -33,7 +76,12 @@ import navMenu from './navMenu.vue'
 import Popup from './popUpNew.vue'
 import axios from "axios";
 import { ref } from 'vue';
+import popView from './popView.vue'
+import upload from './uploading.vue'
+
+let languages = require('./languages.json');
 export default {
+
   mounted() {
     this.onLoad();
   },
@@ -41,44 +89,147 @@ export default {
     const popupTriggers = ref({
       buttonTrigger: false,
 
+
     });
     const TogglePopup = (trigger) => {
       popupTriggers.value[trigger] = !popupTriggers.value[trigger]
     }
     return {
+
       Popup,
       popupTriggers,
-      TogglePopup
+      TogglePopup,
+
     }
   },
   components: {
     navMenu: navMenu,
-    Popup: Popup
+    Popup: Popup,
+    PopView: popView,
+    upload
   },
   data(){
     return{
-      items: [
-        { fileName: "sample.txt"},
-        { fileName: "dgd.png"},
-        { fileName: "error.jpg"}
-
-      ]
+      languagesList: languages,
+      languagesel:'',
+      trans:false,
+      upld:false,
+      recUsername:'',
+      share:false,
+      open:false,
+      cont:'',
+      items:null,
+      usersList:null,
+      user:'',
+      shareFileName:'',
+      transFileName:'',
+      errMsg:'',
+      userLan:''
     }
   },
   methods: {
-   async view(obj) {
+    close(){
+      this.open=!this.open
+    },
+    cloShare(){
+      this.share=!this.share
+    },
+    tClose(){
+      this.trans=!this.trans
+    },
+   async viewContent(fileName) {
+      this.cont=''
+     this.open=true
      try{
        const response = await axios
            .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/view", {
              username: localStorage.username,
-             file: obj
+             recName:this.recUsername,
+             file: fileName
            });
-       if(response.data.message != null){
+       if(response.data != null){
+         this.cont=response.data;
          this.$router.push('/home');
        }
      }catch (err) {
        console.log(err);
      }
+
+    },
+    transFile(fileName) {
+      this.trans=true
+       this.transFileName=fileName
+    },
+    async transContent() {
+      this.upld = true;
+      try{
+        const response = await axios
+            .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/translate", {
+              username: localStorage.username,
+              recName:localStorage.username,
+              file: this.transFileName,
+              destLang: this.languagesel,
+              srcLang: this.userLan
+            });
+        if(response.data != null){
+
+          this.$router.go(0);
+        }
+      }catch (err) {
+        this.upld = false;
+        console.log(err);
+      }
+
+    },
+    async shareFile(fileName) {
+
+      try {
+        this.shareFileName=fileName
+        const res = await axios
+            .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/users", {});
+        if (res.data != null) {
+          this.usersList = res.data;
+        }
+        this.share = true
+      }
+      catch(err){
+        console.log(err)
+      }
+    },
+    async send(){
+      this.upld = true;
+      this.errMsg="";
+      try{
+      const response = await axios
+          .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/share", {
+            username: localStorage.username,
+            recName:this.recUsername,
+            file: this.shareFileName
+          });
+      if(response.data.message == "Notes shared successful"){
+
+        this.$router.go(0);
+      }
+    }catch (err) {
+        this.upld = false;
+        this.errMsg="Error sharing the file !!"
+      console.log(err);
+    }
+
+  },
+    async deleteFile(fileName) {
+      try{
+        const response = await axios
+            .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/delete", {
+              username: localStorage.username,
+              file: fileName
+            });
+        if(response.data.message == "Notes deleted successful"){
+          this.$router.go(0);
+        }
+      }catch (err) {
+        console.log(err);
+      }
 
     },
     async  onLoad() {
@@ -87,8 +238,9 @@ export default {
             .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/send", {
               username: localStorage.username
             });
-        if(response.data.message != null){
-          this.$router.push('/home');
+        if(response.data != null){
+          this.user=response.data.userDetails[1]+" "+response.data.userDetails[2];
+          this.userLan=response.data.userDetails[3];
         }
       }catch (err) {
         console.log(err);
@@ -98,13 +250,16 @@ export default {
             .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/list", {
               username: localStorage.username
             });
-        if(response.data.message != null){
+
+        if(response.data != null){
+          this.items=response.data.files
           this.$router.push('/home');
         }
       }catch (err) {
         console.log(err);
       }
-      },
+
+    },
   }
 
 }
@@ -125,7 +280,7 @@ export default {
 table {
   margin-left: 700px;
   border-collapse: collapse;
-  width: 30%;
+  width: 39%;
   border: 1px solid black;
 
 
@@ -156,4 +311,14 @@ tr:hover {background-color: brown;}
   width: 80px;
   height: 20px
 }
+select {
+  color: #2c3e50;
+  font-size: medium;
+  border-radius: 25px;
+  width: 300px;
+  height: 40px;
+  font-weight: bold;
+
+}
+
 </style>
