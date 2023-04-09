@@ -236,7 +236,7 @@ def downloadFile():
     objectFile = NoteTranslator(srcLang,file,sobj)
     url = sobj.create_presigned_url(file)
     print(url)
-    return redirect(url)
+    #return redirect(url)
     return jsonify({'download link': url}), 200
 
 if __name__ == '__main__':
