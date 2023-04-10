@@ -1,9 +1,9 @@
 <template>
   <div class="topnav">
-    <a class="act" @click="$router.push('/home')" >Home</a>
-    <a class="pro" @click="$router.push('/profile')">Profile</a>
+    <button class="act" @click="$router.push('/home')" >Home</button>
+    <button class="pro" @click="$router.push('/profile')">Profile</button>
     <slot/>
-    <a class="inact" @click="logout">Logout</a>
+    <button class="inact" @click="logout">Logout</button>
   </div>
 </template>
 <script>
@@ -26,25 +26,21 @@ return{
 .topnav {
   overflow: hidden;
   background-color: darkgray;
-  margin-top: -60px;
-  margin-left: -8px;
+ margin-top:-60px;
 
 }
 
-.topnav a {
+.topnav button {
   float: left;
   color: #f2f2f2;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
+  border-radius: 0px;
 }
 
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
 
-}
 p{
   font-size: larger;
   font-weight: bold;
@@ -52,18 +48,21 @@ p{
  position: absolute;
   margin-left: 900px;
 }
-.topnav a.act {
+.topnav button.act {
   background-color: #04AA6D;
   color: white;
+  margin-left: 0px;
 }
-.topnav a.pro {
+.topnav button.pro {
   background-color: cadetblue;
   color: white;
+  margin-left: -20px;
 }
-.topnav a.inact {
+.topnav button.inact {
   background-color: crimson;
   color: white;
- margin-left: 865px;
-  position: absolute;
+  right:-30px;
+  position: fixed;
 }
+
 </style>
