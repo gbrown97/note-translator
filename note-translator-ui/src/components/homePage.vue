@@ -1,6 +1,6 @@
 <template>
   <navMenu>
-    <p>welcome {{user}}</p>
+    <p style="left: 120px;">welcome {{user}}</p>
   </navMenu>
   <h1>Share a file !</h1>
   <br>
@@ -60,7 +60,7 @@
     </tr>
     <tr v-for="item in items" >
 
-      <td><a href="" @click="download(item)">{{ item }}</a></td>
+      <td><a @click="download(item)">{{ item }}</a></td>
       <td>
         <button id="btnn" @click="viewContent(item)">View</button>
         <button id="btnn" @click="transFile(item)">Translate</button>
@@ -124,7 +124,8 @@ export default {
       shareFileName:'',
       transFileName:'',
       errMsg:'',
-      userLan:''
+      userLan:'',
+      link:''
     }
   },
   methods: {
@@ -235,6 +236,7 @@ export default {
 
     },
     async download(fileName) {
+
       try{
         const response = await axios
             .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/download", {
@@ -242,7 +244,8 @@ export default {
               file: fileName
             });
         if(response.data!=null){
-          this.$router.go(0);
+          window.open(response.data["download link"])
+
         }
       }catch (err) {
         console.log(err);
@@ -337,5 +340,14 @@ select {
   font-weight: bold;
 
 }
-
+navMenu{
+  margin-top: 0px;
+}
+a{
+  text-decoration: underline;
+  cursor: pointer;
+}
+a:hover{
+  text-decoration: none;
+}
 </style>

@@ -15,7 +15,7 @@
       </select>
       <h4 style="color:red;">{{err1}}</h4>
 
-      <br>
+      <br><br>
       <input type="text" placeholder="Email/Username" v-model="username"><h4 style="color:red;">{{err3}}</h4>
       <br>
       <br>
@@ -103,9 +103,9 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h4{display: block;
-margin-left: 1200px;
+margin-left: 1320px;
   margin-top: -35px;
-  position: absolute;
+  position: fixed;
 }
 
 #fln{
@@ -127,16 +127,17 @@ input {
 }
 select {
   color: #2c3e50;
-  margin-left: 850px;
+
   font-size: larger;
   padding: 15px;
   border-radius: 25px;
   width: 330px;
   height: 55px;
-display: block;
+
 
 
 }
+
 button{
 
   color: #2c3e50;

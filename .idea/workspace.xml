@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b5755ae2-d3fb-4133-85e1-ad1057643980" name="Changes" comment="languages supported">
+    <list default="true" id="b5755ae2-d3fb-4133-85e1-ad1057643980" name="Changes" comment="download api">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/note-translator-ui/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/note-translator-ui/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/note-translator-ui/src/components/Signup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/note-translator-ui/src/components/Signup.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/note-translator-ui/src/components/homePage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/note-translator-ui/src/components/homePage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/note-translator-ui/src/components/navMenu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/note-translator-ui/src/components/navMenu.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/note-translator-ui/src/components/popUpNew.vue" beforeDir="false" afterPath="$PROJECT_DIR$/note-translator-ui/src/components/popUpNew.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +100,7 @@
       <workItem from="1680925975450" duration="828000" />
       <workItem from="1680951424109" duration="7985000" />
       <workItem from="1680967130824" duration="49000" />
-      <workItem from="1680971833682" duration="2713000" />
+      <workItem from="1680971833682" duration="15044000" />
     </task>
     <task id="LOCAL-00001" summary="SignUp Page">
       <created>1678995057874</created>
@@ -175,7 +179,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680983183068</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="download api">
+      <created>1680983502727</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1680983502727</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -192,6 +203,7 @@
     <MESSAGE value="UI-backend integration part 2" />
     <MESSAGE value="UI-backend integration final part" />
     <MESSAGE value="languages supported" />
-    <option name="LAST_COMMIT_MESSAGE" value="languages supported" />
+    <MESSAGE value="download api" />
+    <option name="LAST_COMMIT_MESSAGE" value="download api" />
   </component>
 </project>
