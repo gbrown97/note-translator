@@ -1,0 +1,11 @@
+Prequisites:
+
+    1. Have AWS account with S3 privileges
+    2. npm is installed
+
+To Deploy:
+    1. Create an S3 bucket with static hosting enabled
+    2. Change error file redirection rule to index.html
+    3. Run 'npm run build' to build webpages
+    4. Upload dist folder contents to new S3 bucket
+    5. Go to static url for S3 bucket to view web pages
