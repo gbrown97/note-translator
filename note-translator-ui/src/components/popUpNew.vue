@@ -49,22 +49,24 @@ export default {
   },
   methods:{
     async onLoad(){
-    try{
-      const response = await axios
-          .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/users", {
+      try{
+        const response = await axios
+            .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/users", {});
 
-          });
-
-      if(response.data != null){
-  this.usersList=response.data;
-
-}
-}catch (err) {
-  console.log(err);
-}
-},
-uploadFile() {
-
+        if(response.data != null){
+          let newArr = [];
+          for (let i = 0; i < response.data.length; i++) {
+            if (response.data[i].username != localStorage.username) {
+              newArr.push(response.data[i]);
+            }
+          }
+          this.usersList=newArr;
+        }
+      }catch (err) {
+        console.log(err);
+      }
+    },
+    uploadFile() {
       this.file = this.$refs.file.files[0];
     },
     async  onUpload() {
@@ -80,20 +82,27 @@ uploadFile() {
       formData.append('file',this.file);
       formData.append('username',this.recUsername);
 
+      try{
+      const response = await axios
+          .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/upload", formData);
+      }
+      catch (err) {
+        this.upld = false;
+        console.log(err)
+        this.sts=" Error uploading file !!";
 
-        try{
-        const response = await axios
-            .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/upload", formData);
+      }
 
-          if(response.data.message == "Notes upload successful") {
-             this.response1 = await axios
-                .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/share", {
-                  username: localStorage.username,
-                  file: this.file.name,
-                  recName: this.recUsername
+      try{
+        if(response.data.message == "Notes upload successful") {
+          this.response1 = await axios
+            .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/share", {
+              username: localStorage.username,
+              file: this.file.name,
+              recName: this.recUsername
 
-                });
-          }
+            });
+        }
         if(this.response1.data.message == "Notes shared successful"){
           this.$router.go(0);
         }
@@ -104,6 +113,7 @@ uploadFile() {
         this.sts=" Error sharing file !!";
 
       }
+      
     }
     }
 }

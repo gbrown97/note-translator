@@ -1,8 +1,8 @@
 <template>
   <navMenu>
-    <p style="left: 120px;">welcome {{user}}</p>
+    <p style="left: 100px;">Welcome {{user + "! Language: " + userLan }}</p>
   </navMenu>
-  <h1>Share a file !</h1>
+  <h1>Share a file!</h1>
   <br>
   <button id="btn" @click="() => TogglePopup('buttonTrigger')">New</button>
   <Popup
@@ -42,7 +42,7 @@
     <form @submit.prevent="send">
     <select class="form-control" v-model="recUsername">
       <option  value="">Send to</option>
-      <option :value="user.username"  v-for="(user) in usersList" :key="user.username">{{user.name + " (" + user.setLang + ")"}}</option>
+      <option :value="user.username"  v-for="(user) in filterUser(usersList)" :key="user.username">{{user.name + " (" + user.setLang + ")"}}</option>
     </select>&nbsp
     <button>Send</button><br><br>
     <button class="popup-close"  @click="cloShare()">
@@ -65,6 +65,7 @@
         <button id="btnn" @click="viewContent(item)">View</button>
         <button id="btnn" @click="transFile(item)">Translate</button>
         <button id="btnn" @click="shareFile(item)">Share</button>
+        <button id="btnn" @click="download(item)">Download</button>
         <button id="btnn" @click="deleteFile(item)">Delete</button>
       </td>
 
@@ -121,6 +122,7 @@ export default {
       items:null,
       usersList:null,
       user:'',
+      username:'',
       shareFileName:'',
       transFileName:'',
       errMsg:'',
@@ -129,6 +131,16 @@ export default {
     }
   },
   methods: {
+    filterUser (arr) {
+      let newArr = [];
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].username != this.username) {
+          newArr.push(arr[i]);
+        }
+      }
+
+      return newArr;
+    },
     close(){
       this.open=!this.open
     },
@@ -261,6 +273,7 @@ export default {
         if(response.data != null){
           this.user=response.data.userDetails[1]+" "+response.data.userDetails[2];
           this.userLan=response.data.userDetails[3];
+          this.username=response.data.userDetails[0];
         }
       }catch (err) {
         console.log(err);

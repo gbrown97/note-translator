@@ -205,9 +205,9 @@ def translateNotes():
     transContent=objectTrans.translate(destLang,sendername)
     sobj = S3Storage(sendername)
     if file.endswith(".txt"):
-        sobj.uploadTxt(transContent, file)
+        sobj.uploadTxt(transContent, file.split(".")[0] + "_" + destLang + ".txt")
     else:
-        filename = file.split(".")[0] + ".txt"
+        filename = file.split(".")[0] + "_" + destLang + ".txt"
         print(filename)
         sobj.uploadTxt(transContent, filename)    
     return jsonify({'message': 'Notes translated successful'}), 200
