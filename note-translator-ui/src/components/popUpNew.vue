@@ -76,14 +76,15 @@ export default {
       this.upld = true;
       this.sts="";
       let formData = new FormData();
+      let response;
       let response1;
 
 
       formData.append('file',this.file);
-      formData.append('username',this.recUsername);
+      formData.append('username',localStorage.username);
 
       try{
-      const response = await axios
+        response = await axios
           .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/upload", formData);
       }
       catch (err) {
@@ -95,7 +96,7 @@ export default {
 
       try{
         if(response.data.message == "Notes upload successful") {
-          this.response1 = await axios
+          response1 = await axios
             .post("http://note-translator-backend-env.eba-nunmcyk7.us-east-2.elasticbeanstalk.com/share", {
               username: localStorage.username,
               file: this.file.name,
@@ -103,7 +104,7 @@ export default {
 
             });
         }
-        if(this.response1.data.message == "Notes shared successful"){
+        if(response1.data.message == "Notes shared successful"){
           this.$router.go(0);
         }
       }
