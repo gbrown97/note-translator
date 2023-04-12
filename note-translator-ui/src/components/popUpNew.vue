@@ -56,9 +56,7 @@ export default {
         if(response.data != null){
           let newArr = [];
           for (let i = 0; i < response.data.length; i++) {
-            if (response.data[i].username != localStorage.username) {
               newArr.push(response.data[i]);
-            }
           }
           this.usersList=newArr;
         }
