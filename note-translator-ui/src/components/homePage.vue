@@ -42,7 +42,7 @@
     <form @submit.prevent="send">
     <select class="form-control" v-model="recUsername">
       <option  value="">Send to</option>
-      <option :value="user.username"  v-for="(user) in usersList" :key="user.username">{{user.name}}</option>
+      <option :value="user.username"  v-for="(user) in usersList" :key="user.username">{{user.name + " (" + user.setLang + ")"}}</option>
     </select>&nbsp
     <button>Send</button><br><br>
     <button class="popup-close"  @click="cloShare()">

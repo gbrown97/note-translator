@@ -11,7 +11,7 @@
       <input type="file" accept="image/png, image/gif, image/jpeg, .txt, .pdf" @change="uploadFile" ref="file">
         <select class="form-control" v-model="recUsername">
           <option  value="">Send to</option>
-          <option :value="user.username"  v-for="(user) in usersList" :key="user.username">{{user.name}}</option>
+          <option :value="user.username"  v-for="(user) in usersList" :key="user.username">{{user.name + " (" + user.setLang + ")"}}</option>
         </select>&nbsp
         <button>Upload</button><br><br>
       <button class="popup-close" @click="TogglePopup()">
